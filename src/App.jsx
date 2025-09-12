@@ -43,12 +43,12 @@ export default function App() {
     (Number(current["__EMPTY_8"]) || 0) +
     (Number(current["Result"]) || 0)
 
-  const screeningData = {
-    Pending: Number(current["Screening Feedback"]) || 0,
-    Duplicate: Number(current["__EMPTY_2"]) || 0,
-    Select: Number(current["__EMPTY_3"]) || 0,
-    Reject: Number(current["__EMPTY_4"]) || 0,
-  }
+ const screeningData = {
+  "Screening Pending": Number(current["Screening Feedback"]) || 0,
+  Duplicate: Number(current["__EMPTY_2"]) || 0,
+  Select: Number(current["__EMPTY_3"]) || 0,
+  Reject: Number(current["__EMPTY_4"]) || 0,
+}
 
   const interviewData = {
     "L1 Pending": Number(current["__EMPTY_5"]) || 0,
