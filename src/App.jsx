@@ -120,21 +120,34 @@ export default function App() {
       )}
 
       {/* Stat Cards */}
-      {data.length > 0 && filtered.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-          <StatCard title="Total Resumes" value={totalResumes} color="blue" />
-          <StatCard title="Total Selects" value={totalSelects} color="green" />
-          <StatCard
-            title="Conversion %"
-            value={
-              totalResumes > 0
-                ? ((totalSelects / totalResumes) * 100).toFixed(1) + "%"
-                : "0%"
-            }
-            color="purple"
-          />
-        </div>
-      )}
+{data.length > 0 && filtered.length > 0 && (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <StatCard title="Total Resumes" value={totalResumes} color="blue" />
+    <StatCard 
+      title="Pending (%)" 
+      value={
+        totalResumes > 0 
+          ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+          : "0%"
+      } 
+      color="orange" 
+    />
+    <StatCard 
+      title="Screen Selects" 
+      value={screeningData.Select} 
+      color="green" 
+    />
+    <StatCard 
+      title="Final Status (%)" 
+      value={
+        screeningData.Select > 0 
+          ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
+          : "0%"
+      } 
+      color="purple" 
+    />
+  </div>
+)}
 
       {/* Charts */}
       {filtered.length > 0 ? (
