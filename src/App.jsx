@@ -66,59 +66,62 @@ export default function App() {
         📊 HR Dashboard
       </h1>
 
-      {/* Upload + Filters */}
-      <div className="bg-white p-6 rounded-2xl shadow mb-6">
-        <h2 className="text-xl font-semibold mb-4">Upload Excel & Filters</h2>
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Upload */}
-          <ExcelUploader onData={setData} />
+{/* Upload + Filters */}
+<div className="bg-white p-6 rounded-2xl shadow mb-6">
+   <div className="flex items-center gap-4 flex-wrap">
+    <h2 className="text-xl font-semibold mb-4">Upload Excel :</h2>
+    {/* Upload */}
+    <ExcelUploader onData={setData} />
 
-          {/* Filters (only show when Excel is uploaded) */}
-          {data.length > 0 && (
-            <div className="flex gap-4">
-              <select
-                value={poc}
-                onChange={(e) => setPoc(e.target.value)}
-                className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
-              >
-                <option value="">All POCs</option>
-                {pocOptions.map((p) => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </select>
+    {/* Filters (only show when Excel is uploaded) */}
+    {data.length > 0 && (
+      <>
+        <span className="text-sm font-medium text-gray-600">Filters:</span>
 
-              <select
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
-              >
-                <option value="">All Months</option>
-                {monthOptions.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
-        </div>
-      </div>
+        <select
+          value={poc}
+          onChange={(e) => setPoc(e.target.value)}
+          className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">All POCs</option>
+          {pocOptions.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="">All Months</option>
+          {monthOptions.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      </>
+    )}
+  </div>
+</div>
 
 
-      {/* Placeholder when no data */}
-      {data.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
-            alt="Upload illustration"
-            className="w-24 h-24 mb-4 opacity-70"
-          />
-          <p className="text-lg font-medium">No data uploaded yet</p>
-          <p className="text-sm">Upload an Excel file to see insights 🚀</p>
-        </div>
-      )}
+
+{/* Placeholder when no data */}
+{data.length === 0 && (
+  <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500">
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
+      alt="Upload illustration"
+      className="w-24 h-24 mb-4 opacity-70"
+    />
+    <p className="text-lg font-medium">No data uploaded yet</p>
+    <p className="text-sm">Upload an Excel file to see insights 🚀</p>
+  </div>
+)}
 
       {/* Stat Cards */}
 {data.length > 0 && filtered.length > 0 && (
