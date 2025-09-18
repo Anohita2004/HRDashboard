@@ -4,12 +4,13 @@ import FeedbackPie from "./components/FeedbackPie"
 
 const StatCard = ({ title, value, color }) => (
   <div
-    className={`bg-white p-2 rounded-md shadow-sm hover:scale-105 transform transition animate-fadeIn border-l-4 border-${color}-500 w-32`}
+    className={`bg-white p-4 rounded-lg shadow-md hover:scale-105 transform transition animate-fadeIn border-l-3 border-${color}-500 w-36`}
   >
-    <h3 className="text-gray-500 text-[10px] truncate">{title}</h3>
-    <p className={`text-base font-semibold text-${color}-600 mt-1`}>{value}</p>
+    <h3 className="text-gray-500 text-xs truncate">{title}</h3>
+    <p className={`text-lg font-semibold text-${color}-600 mt-1`}>{value}</p>
   </div>
 )
+
 
 
 export default function App() {
