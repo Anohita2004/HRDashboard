@@ -124,10 +124,10 @@ export default function App() {
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
     <StatCard title="Total Resumes" value={totalResumes} color="blue" />
     <StatCard 
-      title="Pending (%)" 
+      title="Pending " 
       value={
         totalResumes > 0 
-          ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+          ? ((screeningData["Screening Pending"])) 
           : "0%"
       } 
       color="orange" 
@@ -146,6 +146,16 @@ export default function App() {
       } 
       color="purple" 
     />
+    <StatCard 
+      title="Pending (%)" 
+      value={
+        totalResumes > 0 
+          ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+          : "0%"
+      } 
+      color="orange" 
+    />
+    
   </div>
 )}
 
