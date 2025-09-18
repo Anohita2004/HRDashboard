@@ -122,62 +122,62 @@ export default function App() {
 
       {/* Stat Cards */}
 {data.length > 0 && filtered.length > 0 && (
-  <div className="space-y-6 mb-8">
-   {/* Counts */}
-<div>
-  <h2 className="text-sm font-bold text-gray-700 mb-2">Counts</h2>
-  <div className="flex flex-wrap gap-3">
-    <StatCard title="Total Resumes" value={totalResumes} color="blue" />
-    <StatCard 
-      title="Pending" 
-      value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
-      color="orange" 
-    />
-    <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
-    <StatCard 
-      title="Final Selects" 
-      value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
-      color="purple" 
-    />
-  </div>
-</div>
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    {/* Counts */}
+    <div>
+      <h2 className="text-sm font-bold text-gray-700 mb-2">Counts</h2>
+      <div className="flex flex-wrap gap-3">
+        <StatCard title="Total Resumes" value={totalResumes} color="blue" />
+        <StatCard 
+          title="Pending" 
+          value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
+          color="orange" 
+        />
+        <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
+        <StatCard 
+          title="Final Selects" 
+          value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
+          color="purple" 
+        />
+      </div>
+    </div>
 
-{/* Percentages */}
-<div>
-  <h2 className="text-sm font-bold text-gray-700 mb-2">Percentages</h2>
-  <div className="flex flex-wrap gap-3">
-    <StatCard 
-      title="Final Status (%)" 
-      value={
-        screeningData.Select > 0 
-          ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
-          : "0%"
-      } 
-      color="purple" 
-    />
-    <StatCard 
-      title="Pending (%)" 
-      value={
-        totalResumes > 0 
-          ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
-          : "0%"
-      } 
-      color="orange" 
-    />
-    <StatCard 
-      title="Screening Feedback (%)" 
-      value={
-        totalResumes > 0 
-          ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
-          : "0%"
-      } 
-      color="green" 
-    />
+    {/* Percentages */}
+    <div>
+      <h2 className="text-sm font-bold text-gray-700 mb-2">Percentages</h2>
+      <div className="flex flex-wrap gap-3">
+        <StatCard 
+          title="Final Status (%)" 
+          value={
+            screeningData.Select > 0 
+              ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
+              : "0%"
+          } 
+          color="purple" 
+        />
+        <StatCard 
+          title="Pending (%)" 
+          value={
+            totalResumes > 0 
+              ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+              : "0%"
+          } 
+          color="orange" 
+        />
+        <StatCard 
+          title="Screening Feedback (%)" 
+          value={
+            totalResumes > 0 
+              ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
+              : "0%"
+          } 
+          color="green" 
+        />
+      </div>
+    </div>
   </div>
-</div>
-  </div > 
-    
 )}
+
 
 
       {/* Charts */}
