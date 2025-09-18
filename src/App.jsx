@@ -125,7 +125,7 @@ export default function App() {
   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
     {/* Counts */}
     <div>
-      <h2 className="text-sm font-bold text-gray-700 mb-2">Counts</h2>
+      <h2 className="text-sm font-bold text-gray-700 mb-2">Tabs</h2>
       <div className="flex flex-wrap gap-3">
         <StatCard title="Total Resumes" value={totalResumes} color="blue" />
         <StatCard 
@@ -144,7 +144,7 @@ export default function App() {
 
     {/* Percentages */}
     <div>
-      <h2 className="text-sm font-bold text-gray-700 mb-2">Percentages</h2>
+      <h2 className="text-sm font-bold text-gray-700 mb-2">Conversion</h2>
       <div className="flex flex-wrap gap-3">
         <StatCard 
           title="Final Status (%)" 
