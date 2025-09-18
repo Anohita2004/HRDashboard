@@ -4,12 +4,13 @@ import FeedbackPie from "./components/FeedbackPie"
 
 const StatCard = ({ title, value, color }) => (
   <div
-    className={`bg-white/90 backdrop-blur-lg p-6 rounded-2xl shadow-lg hover:scale-105 transform transition animate-fadeIn border-t-4 border-${color}-500`}
+    className={`bg-white p-2 rounded-md shadow-sm hover:scale-105 transform transition animate-fadeIn border-l-4 border-${color}-500 w-32`}
   >
-    <h3 className="text-gray-500 text-sm">{title}</h3>
-    <p className={`text-3xl font-bold text-${color}-600 mt-2`}>{value}</p>
+    <h3 className="text-gray-500 text-[10px] truncate">{title}</h3>
+    <p className={`text-base font-semibold text-${color}-600 mt-1`}>{value}</p>
   </div>
 )
+
 
 export default function App() {
   const [data, setData] = useState([])
@@ -121,31 +122,30 @@ export default function App() {
 
       {/* Stat Cards */}
 {data.length > 0 && filtered.length > 0 && (
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+  <div className="space-y-6 mb-8">
+   {/* Counts */}
+<div>
+  <h2 className="text-sm font-bold text-gray-700 mb-2">Counts</h2>
+  <div className="flex flex-wrap gap-3">
     <StatCard title="Total Resumes" value={totalResumes} color="blue" />
     <StatCard 
-      title="Pending " 
-      value={
-        totalResumes > 0 
-          ? ((screeningData["Screening Pending"])) 
-          : "0"
-      } 
+      title="Pending" 
+      value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
       color="orange" 
     />
+    <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
     <StatCard 
-      title="Screen Selects" 
-      value={screeningData.Select} 
-      color="green" 
-    />
-     <StatCard 
       title="Final Selects" 
-      value={
-        screeningData.Select > 0 
-          ? ((interviewData["Final Select"])) 
-          : "0"
-      } 
+      value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
       color="purple" 
     />
+  </div>
+</div>
+
+{/* Percentages */}
+<div>
+  <h2 className="text-sm font-bold text-gray-700 mb-2">Percentages</h2>
+  <div className="flex flex-wrap gap-3">
     <StatCard 
       title="Final Status (%)" 
       value={
@@ -171,11 +171,14 @@ export default function App() {
           ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
           : "0%"
       } 
-      color="orange" 
+      color="green" 
     />
-    
   </div>
+</div>
+  </div > 
+    
 )}
+
 
       {/* Charts */}
       {filtered.length > 0 ? (
