@@ -150,16 +150,7 @@ export default function App() {
     <div>
       <h2 className="text-sm font-bold text-gray-700 mb-2">Conversion</h2>
       <div className="flex flex-wrap gap-3">
-        <StatCard 
-          title="Final Status (%)" 
-          value={
-            screeningData.Select > 0 
-              ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
-              : "0%"
-          } 
-          color="purple" 
-        />
-        <StatCard 
+         <StatCard 
           title="Pending (%)" 
           value={
             totalResumes > 0 
@@ -177,6 +168,17 @@ export default function App() {
           } 
           color="green" 
         />
+        <StatCard 
+          title="Final Status (%)" 
+          value={
+            screeningData.Select > 0 
+              ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
+              : "0%"
+          } 
+          color="purple" 
+        />
+       
+        
       </div>
     </div>
   </div>
