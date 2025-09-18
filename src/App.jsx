@@ -128,7 +128,7 @@ export default function App() {
       value={
         totalResumes > 0 
           ? ((screeningData["Screening Pending"])) 
-          : "0%"
+          : "0"
       } 
       color="orange" 
     />
@@ -136,6 +136,15 @@ export default function App() {
       title="Screen Selects" 
       value={screeningData.Select} 
       color="green" 
+    />
+     <StatCard 
+      title="Final Selects" 
+      value={
+        screeningData.Select > 0 
+          ? ((interviewData["Final Select"])) 
+          : "0"
+      } 
+      color="purple" 
     />
     <StatCard 
       title="Final Status (%)" 
@@ -151,6 +160,15 @@ export default function App() {
       value={
         totalResumes > 0 
           ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+          : "0%"
+      } 
+      color="orange" 
+    />
+    <StatCard 
+      title="Screening Feedback (%)" 
+      value={
+        totalResumes > 0 
+          ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
           : "0%"
       } 
       color="orange" 
