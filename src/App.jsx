@@ -70,7 +70,8 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black 
+                text-white p-8 animate-gradient">
       {/* Top Bar */}
       <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
         <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
