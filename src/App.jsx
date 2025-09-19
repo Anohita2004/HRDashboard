@@ -70,7 +70,7 @@ export default function App() {
   {/* Icon + Title */}
   <div className="flex items-center gap-2">
     <img
-      src="public\icons8-dashboard-layout-48.png"
+      src="/icons8-dashboard-layout-48.png"
       alt="HR"
       className="w-10 h-10"
     />
