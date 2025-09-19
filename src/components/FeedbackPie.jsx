@@ -49,36 +49,40 @@ const renderCustomizedLabel = ({
   );
 };
 
-const CenterLabels = ({ data, cx, cy }) => {
+const CenterLabels = ({ data, cx, cy, colors }) => {
   const zeroSlices = data.filter((d) => d.value === 0);
 
   return (
     <g>
-      {zeroSlices.map((d, i) => (
-        <motion.text
-          key={d.name}
-          x={cx}
-          y={cy + i * 18 - (zeroSlices.length * 9)}
-          fill="#9CA3AF"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize={12}
-          fontWeight="500"
-          initial={{ opacity: 0, y: cy + 40 }}
-          animate={{
-            opacity: 1,
-            y: cy + i * 18 - (zeroSlices.length * 9),
-          }}
-          transition={{
-            duration: 0.6,
-            delay: 1 + i * 0.2,
-            type: "spring",
-            stiffness: 120,
-          }}
-        >
-          {`${d.name}: 0`}
-        </motion.text>
-      ))}
+      {zeroSlices.map((d, i) => {
+        const index = data.findIndex((entry) => entry.name === d.name);
+
+        return (
+          <motion.text
+            key={d.name}
+            x={cx}
+            y={cy + i * 1 - zeroSlices.length * 9}
+            fill={colors[index % colors.length]} // 🔹 Use slice color
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize={12}
+            fontWeight="500"
+            initial={{ opacity: 0, y: cy + 40 }}
+            animate={{
+              opacity: 1,
+              y: cy + i * 18 - zeroSlices.length * 9,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 1 + i * 0.2,
+              type: "spring",
+              stiffness: 120,
+            }}
+          >
+            {`${d.name}: 0`}
+          </motion.text>
+        );
+      })}
     </g>
   );
 };
@@ -116,7 +120,7 @@ export default function FeedbackPie({ title, data }) {
           </Pie>
 
           {/* Now center labels get relative cx, cy from "50%" */}
-          <CenterLabels data={chartData} cx={35} cy={75} />
+          <CenterLabels data={chartData} cx={435} cy={65} colors={COLORS}  />
 
           <Tooltip />
           <Legend
@@ -132,4 +136,3 @@ export default function FeedbackPie({ title, data }) {
     </div>
   );
 }
-
