@@ -13,7 +13,8 @@ const COLORS = [
   "#DC2626", // Red
   "#F59E0B", // Amber
   "#0EA5E9", // Sky
-  "#9333EA", // Purple
+  "#9333EA", // Purple,
+  
 ]
 
 export default function FeedbackPie({ title, data }) {
@@ -26,7 +27,7 @@ export default function FeedbackPie({ title, data }) {
   // Filter only non-zero values for the pie
  const adjustedData = chartData.map(d => ({
   ...d,
-  value: d.value === 0 ? 0.0 : d.value
+  value: d.value === 0 ? 0.1 : d.value
 }));
 
 
