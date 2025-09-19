@@ -11,9 +11,6 @@ const StatCard = ({ title, value, color }) => (
   </div>
 )
 
-
-
-
 export default function App() {
   const [data, setData] = useState([])
   const [poc, setPoc] = useState("")
@@ -46,12 +43,12 @@ export default function App() {
     (Number(current["__EMPTY_8"]) || 0) +
     (Number(current["Result"]) || 0)
 
- const screeningData = {
-  "Screening Pending": Number(current["Screening Feedback"]) || 0,
-  Duplicate: Number(current["__EMPTY_2"]) || 0,
-  Select: Number(current["__EMPTY_3"]) || 0,
-  Reject: Number(current["__EMPTY_4"]) || 0,
-}
+  const screeningData = {
+    "Screening Pending": Number(current["Screening Feedback"]) || 0,
+    Duplicate: Number(current["__EMPTY_2"]) || 0,
+    Select: Number(current["__EMPTY_3"]) || 0,
+    Reject: Number(current["__EMPTY_4"]) || 0,
+  }
 
   const interviewData = {
     "L1 Pending": Number(current["__EMPTY_5"]) || 0,
@@ -64,128 +61,125 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
-      <h1 className="text-4xl font-bold text-indigo-400 mb-8 text-center">
-        📊 HR Dashboard
-      </h1>
+      
+      {/* Top Row: Title + Upload */}
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+        {/* Left: Heading */}
+        <h1 className="text-3xl font-bold text-indigo-400">
+          📊 HR Dashboard
+        </h1>
 
-{/* Upload + Filters */}
-<div className="bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md mb-6 border border-gray-700">
-  
-  <div className="flex items-center gap-4 flex-wrap">
-    <h2 className="text-xl font-semibold text-gray-200 mb-4">Upload Excel & Filters</h2>
-    <ExcelUploader onData={setData} />
+        {/* Right: Upload + Filters */}
+        <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-700">
+          <div className="flex items-center gap-3 flex-wrap">
+            <h1 className="text-lg font-semibold text-gray-200">Upload Data</h1>
+            <ExcelUploader onData={setData} />
 
-    {/* Filters (only show when Excel is uploaded) */}
-    {data.length > 0 && (
-      <>
-        <span className="text-sm font-medium text-gray-300">Filters:</span>
+            {data.length > 0 && (
+              <>
+                <span className="text-sm font-medium text-gray-300">Filters:</span>
 
-        <select
-          value={poc}
-          onChange={(e) => setPoc(e.target.value)}
-          className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
-        >
-          <option value="">All POCs</option>
-          {pocOptions.map((p) => (
-            <option key={p} value={p}>
-              {p}
-            </option>
-          ))}
-        </select>
+                <select
+                  value={poc}
+                  onChange={(e) => setPoc(e.target.value)}
+                  className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
+                >
+                  <option value="">All POCs</option>
+                  {pocOptions.map((p) => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
+                </select>
 
-        <select
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-          className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
-        >
-          <option value="">All Months</option>
-          {monthOptions.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-      </>
-    )}
-  </div>
-</div>
+                <select
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
+                >
+                  <option value="">All Months</option>
+                  {monthOptions.map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
 
-
-
-{/* Placeholder when no data */}
-{data.length === 0 && (
-  <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700">
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
-      alt="Upload illustration"
-      className="w-24 h-24 mb-4 opacity-70"
-    />
-    <p className="text-lg font-medium">No data uploaded yet</p>
-    <p className="text-sm">Upload an Excel file to see insights 🚀</p>
-  </div>
-)}
+      {/* Placeholder when no data */}
+      {data.length === 0 && (
+        <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
+            alt="Upload illustration"
+            className="w-24 h-24 mb-4 opacity-70"
+          />
+          <p className="text-lg font-medium">No data uploaded yet</p>
+          <p className="text-sm">Upload an Excel file to see insights 🚀</p>
+        </div>
+      )}
 
       {/* Stat Cards */}
-{data.length > 0 && filtered.length > 0 && (
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-    {/* Counts */}
-    <div>
-      <h2 className="text-sm font-bold text-gray-700 mb-2">Tabs</h2>
-      <div className="flex flex-wrap gap-3">
-        <StatCard title="Total Resumes" value={totalResumes} color="blue" />
-        <StatCard 
-          title="Pending" 
-          value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
-          color="orange" 
-        />
-        <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
-        <StatCard 
-          title="Final Selects" 
-          value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
-          color="purple" 
-        />
-      </div>
-    </div>
+      {data.length > 0 && filtered.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Counts */}
+          <div>
+            <h2 className="text-sm font-bold text-gray-700 mb-2">Tabs</h2>
+            <div className="flex flex-wrap gap-3">
+              <StatCard title="Total Resumes" value={totalResumes} color="blue" />
+              <StatCard 
+                title="Pending" 
+                value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
+                color="orange" 
+              />
+              <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
+              <StatCard 
+                title="Final Selects" 
+                value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
+                color="purple" 
+              />
+            </div>
+          </div>
 
-    {/* Percentages */}
-    <div>
-      <h2 className="text-sm font-bold text-gray-700 mb-2">Conversion</h2>
-      <div className="flex flex-wrap gap-3">
-         <StatCard 
-          title="Pending (%)" 
-          value={
-            totalResumes > 0 
-              ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
-              : "0%"
-          } 
-          color="orange" 
-        />
-        <StatCard 
-          title="Screening Feedback (%)" 
-          value={
-            totalResumes > 0 
-              ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
-              : "0%"
-          } 
-          color="green" 
-        />
-        <StatCard 
-          title="Final Status (%)" 
-          value={
-            screeningData.Select > 0 
-              ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
-              : "0%"
-          } 
-          color="purple" 
-        />
-       
-        
-      </div>
-    </div>
-  </div>
-)}
-
-
+          {/* Percentages */}
+          <div>
+            <h2 className="text-sm font-bold text-gray-700 mb-2">Conversion</h2>
+            <div className="flex flex-wrap gap-3">
+              <StatCard 
+                title="Pending (%)" 
+                value={
+                  totalResumes > 0 
+                    ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+                    : "0%"
+                } 
+                color="orange" 
+              />
+              <StatCard 
+                title="Screening Feedback (%)" 
+                value={
+                  totalResumes > 0 
+                    ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
+                    : "0%"
+                } 
+                color="green" 
+              />
+              <StatCard 
+                title="Final Status (%)" 
+                value={
+                  screeningData.Select > 0 
+                    ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
+                    : "0%"
+                } 
+                color="purple" 
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Charts */}
       {filtered.length > 0 ? (
