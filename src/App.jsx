@@ -200,20 +200,20 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="animate-fadeIn bg-gray-800/40 backdrop-blur-lg p-6 rounded-2xl border border-gray-700 shadow-md">
             <FeedbackPie
-              title="📝 Screening Feedback"
+              title=" Screening Feedback"
               data={screeningData}
-              colors={["#3B82F6", "#60A5FA", "#10B981", "#F87171"]}
+              colors={["#2775f1ff", "#60A5FA", "#10B981", "#F87171"]}
             />
           </div>
           <div className="animate-fadeIn delay-200 bg-gray-800/40 backdrop-blur-lg p-6 rounded-2xl border border-gray-700 shadow-md">
             <FeedbackPie
-              title="🎤 Interview Feedback"
+              title=" Interview Feedback"
               data={interviewData}
               colors={[
-                "#FBBF24",
+                "#c99615ff",
                 "#8B5CF6",
                 "#3B82F6",
-                "#10B981",
+                "#0b8f63ff",
                 "#F87171",
                 "#EC4899",
               ]}
