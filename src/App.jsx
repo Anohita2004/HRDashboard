@@ -23,7 +23,7 @@ export default function App() {
   const monthOptions = useMemo(
     () =>
       [...new Set(data.map((d) => d.__EMPTY).filter(Boolean))].filter(
-        (m) => m !== "Month"
+        (m) => m !== "Month" && m !== "Total"
       ),
     [data]
   )
