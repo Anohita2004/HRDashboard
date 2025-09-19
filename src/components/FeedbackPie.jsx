@@ -27,8 +27,8 @@ export default function FeedbackPie({ title, data }) {
   const nonZeroData = chartData.filter((d) => d.value > 0)
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow">
-      <h2 className="text-lg font-semibold mb-4">{title}</h2>
+    <div className="bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md border border-gray-700">
+      <h2 className="text-md font-semibold text-gray-200 mb-3">{title}</h2>
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
           <Pie
