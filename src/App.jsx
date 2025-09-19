@@ -54,12 +54,14 @@ export default function App() {
   }
 
   const interviewData = {
+    "No Show": Number(current["Interview feedback"]) || 0,
     "L1 Pending": Number(current["__EMPTY_5"]) || 0,
     "L1 Select": Number(current["__EMPTY_6"]) || 0,
     "L1 Reject": Number(current["__EMPTY_7"]) || 0,
     "L2 Select": Number(current["__EMPTY_8"]) || 0,
     "L2 Reject": Number(current["__EMPTY_9"]) || 0,
     "Final Select": Number(current["Result"]) || 0,
+    
   }
 
   return (
@@ -216,6 +218,7 @@ export default function App() {
                 "#0b8f63ff",
                 "#F87171",
                 "#EC4899",
+                "#FF0000"
               ]}
             />
           </div>
