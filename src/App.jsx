@@ -4,12 +4,13 @@ import FeedbackPie from "./components/FeedbackPie"
 
 const StatCard = ({ title, value, color }) => (
   <div
-    className={`bg-white p-4 rounded-lg shadow-md hover:scale-105 transform transition animate-fadeIn border-l-3 border-${color}-500 w-36`}
+    className={`w-32 bg-gray-800/60 backdrop-blur-md border border-gray-700 p-3 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition`}
   >
-    <h3 className="text-gray-500 text-xs truncate">{title}</h3>
-    <p className={`text-lg font-semibold text-${color}-600 mt-1`}>{value}</p>
+    <h3 className="text-gray-400 text-[10px] mb-1 truncate">{title}</h3>
+    <p className={`text-base font-semibold text-${color}-400`}>{value}</p>
   </div>
 )
+
 
 
 
@@ -62,27 +63,27 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 p-8">
-      <h1 className="text-4xl font-bold text-blue-700 mb-8 text-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
+      <h1 className="text-4xl font-bold text-indigo-400 mb-8 text-center">
         📊 HR Dashboard
       </h1>
 
 {/* Upload + Filters */}
-<div className="bg-white p-6 rounded-2xl shadow mb-6">
-   <div className="flex items-center gap-4 flex-wrap">
-    <h2 className="text-xl font-semibold mb-4">Upload Excel :</h2>
-    {/* Upload */}
+<div className="bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md mb-6 border border-gray-700">
+  
+  <div className="flex items-center gap-4 flex-wrap">
+    <h2 className="text-xl font-semibold text-gray-200 mb-4">Upload Excel & Filters</h2>
     <ExcelUploader onData={setData} />
 
     {/* Filters (only show when Excel is uploaded) */}
     {data.length > 0 && (
       <>
-        <span className="text-sm font-medium text-gray-600">Filters:</span>
+        <span className="text-sm font-medium text-gray-300">Filters:</span>
 
         <select
           value={poc}
           onChange={(e) => setPoc(e.target.value)}
-          className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">All POCs</option>
           {pocOptions.map((p) => (
@@ -95,7 +96,7 @@ export default function App() {
         <select
           value={month}
           onChange={(e) => setMonth(e.target.value)}
-          className="p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400"
+          className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
         >
           <option value="">All Months</option>
           {monthOptions.map((m) => (
@@ -113,7 +114,7 @@ export default function App() {
 
 {/* Placeholder when no data */}
 {data.length === 0 && (
-  <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500">
+  <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700">
     <img
       src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
       alt="Upload illustration"
