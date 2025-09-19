@@ -4,10 +4,21 @@ import FeedbackPie from "./components/FeedbackPie"
 
 const StatCard = ({ title, value, color }) => (
   <div
-    className={`w-32 bg-gray-800/60 backdrop-blur-md border border-gray-700 p-3 rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 transition`}
+    className={`w-36 bg-gray-800/40 backdrop-blur-xl border border-${color}-500/40 
+                shadow-lg shadow-${color}-500/20 p-4 rounded-2xl 
+                hover:scale-105 transition transform duration-300`}
   >
-    <h3 className="text-gray-400 text-[10px] mb-1 truncate">{title}</h3>
-    <p className={`text-base font-semibold text-${color}-400`}>{value}</p>
+    <h3 className="text-gray-300 text-xs mb-1 truncate">{title}</h3>
+    <p className={`text-lg font-bold text-${color}-400`}>{value}</p>
+    {/* optional progress bar for percentage cards */}
+    {String(value).includes("%") && (
+      <div className="w-full bg-gray-700 rounded-full h-1 mt-2">
+        <div
+          className={`bg-${color}-500 h-1 rounded-full`}
+          style={{ width: value }}
+        ></div>
+      </div>
+    )}
   </div>
 )
 
@@ -22,9 +33,8 @@ export default function App() {
   )
   const monthOptions = useMemo(
     () =>
-      [...new Set(data.map((d) => d.__EMPTY).filter(Boolean))].filter(
-        (m) => m !== "Month" && m !== "Total"
-      ),
+      [...new Set(data.map((d) => d.__EMPTY).filter(Boolean))]
+        .filter((m) => m !== "Month" && m !== "Total"), // remove invalids
     [data]
   )
 
@@ -61,18 +71,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white p-8">
-      
-      {/* Top Row: Title + Upload */}
-      <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-        {/* Left: Heading */}
-        <h1 className="text-3xl font-bold text-indigo-400">
+      {/* Top Bar */}
+      <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
+        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
           📊 HR Dashboard
         </h1>
 
-        {/* Right: Upload + Filters */}
-        <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-700">
+        {/* Upload + Filters */}
+        <div className="bg-gray-800/50 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-700">
           <div className="flex items-center gap-3 flex-wrap">
-            <h1 className="text-lg font-semibold text-gray-200">Upload Data</h1>
             <ExcelUploader onData={setData} />
 
             {data.length > 0 && (
@@ -82,7 +89,8 @@ export default function App() {
                 <select
                   value={poc}
                   onChange={(e) => setPoc(e.target.value)}
-                  className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
+                  className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
+                             focus:ring-2 focus:ring-indigo-500 hover:border-indigo-400 transition"
                 >
                   <option value="">All POCs</option>
                   {pocOptions.map((p) => (
@@ -95,7 +103,8 @@ export default function App() {
                 <select
                   value={month}
                   onChange={(e) => setMonth(e.target.value)}
-                  className="p-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:ring-2 focus:ring-indigo-500"
+                  className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
+                             focus:ring-2 focus:ring-pink-500 hover:border-pink-400 transition"
                 >
                   <option value="">All Months</option>
                   {monthOptions.map((m) => (
@@ -112,7 +121,7 @@ export default function App() {
 
       {/* Placeholder when no data */}
       {data.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700">
+        <div className="flex flex-col items-center justify-center h-64 text-center text-gray-400 bg-gray-800/40 backdrop-blur-md rounded-xl border border-gray-700 animate-fadeIn">
           <img
             src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
             alt="Upload illustration"
@@ -125,56 +134,60 @@ export default function App() {
 
       {/* Stat Cards */}
       {data.length > 0 && filtered.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
           {/* Counts */}
           <div>
-            <h2 className="text-sm font-bold text-gray-700 mb-2">Tabs</h2>
-            <div className="flex flex-wrap gap-3">
+            <h2 className="text-sm font-bold text-gray-300 mb-3">Tabs</h2>
+            <div className="flex flex-wrap gap-4">
               <StatCard title="Total Resumes" value={totalResumes} color="blue" />
-              <StatCard 
-                title="Pending" 
-                value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"} 
-                color="orange" 
+              <StatCard
+                title="Pending"
+                value={totalResumes > 0 ? screeningData["Screening Pending"] : "0"}
+                color="orange"
               />
-              <StatCard title="Screen Selects" value={totalSelects>0? totalSelects:"0"} color="green" />
-              <StatCard 
-                title="Final Selects" 
-                value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"} 
-                color="purple" 
+              <StatCard
+                title="Screen Selects"
+                value={totalSelects > 0 ? totalSelects : "0"}
+                color="green"
+              />
+              <StatCard
+                title="Final Selects"
+                value={screeningData.Select > 0 ? interviewData["Final Select"] : "0"}
+                color="purple"
               />
             </div>
           </div>
 
           {/* Percentages */}
           <div>
-            <h2 className="text-sm font-bold text-gray-700 mb-2">Conversion</h2>
-            <div className="flex flex-wrap gap-3">
-              <StatCard 
-                title="Pending (%)" 
+            <h2 className="text-sm font-bold text-gray-300 mb-3">Conversion</h2>
+            <div className="flex flex-wrap gap-4">
+              <StatCard
+                title="Pending (%)"
                 value={
-                  totalResumes > 0 
-                    ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%" 
+                  totalResumes > 0
+                    ? ((screeningData["Screening Pending"] / totalResumes) * 100).toFixed(1) + "%"
                     : "0%"
-                } 
-                color="orange" 
+                }
+                color="orange"
               />
-              <StatCard 
-                title="Screening Feedback (%)" 
+              <StatCard
+                title="Screening Feedback (%)"
                 value={
-                  totalResumes > 0 
-                    ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%" 
+                  totalResumes > 0
+                    ? ((screeningData.Select / totalResumes) * 100).toFixed(1) + "%"
                     : "0%"
-                } 
-                color="green" 
+                }
+                color="green"
               />
-              <StatCard 
-                title="Final Status (%)" 
+              <StatCard
+                title="Final Status (%)"
                 value={
-                  screeningData.Select > 0 
-                    ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%" 
+                  screeningData.Select > 0
+                    ? ((interviewData["Final Select"] / screeningData.Select) * 100).toFixed(1) + "%"
                     : "0%"
-                } 
-                color="purple" 
+                }
+                color="purple"
               />
             </div>
           </div>
@@ -184,14 +197,14 @@ export default function App() {
       {/* Charts */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="animate-fadeIn">
+          <div className="animate-fadeIn bg-gray-800/40 backdrop-blur-lg p-6 rounded-2xl border border-gray-700 shadow-md">
             <FeedbackPie
               title="📝 Screening Feedback"
               data={screeningData}
               colors={["#3B82F6", "#60A5FA", "#10B981", "#F87171"]}
             />
           </div>
-          <div className="animate-fadeIn delay-200">
+          <div className="animate-fadeIn delay-200 bg-gray-800/40 backdrop-blur-lg p-6 rounded-2xl border border-gray-700 shadow-md">
             <FeedbackPie
               title="🎤 Interview Feedback"
               data={interviewData}
@@ -208,9 +221,7 @@ export default function App() {
         </div>
       ) : (
         data.length > 0 && (
-          <p className="text-gray-600 text-center">
-            No data found for selected filters.
-          </p>
+          <p className="text-gray-500 text-center mt-6">No data found for selected filters.</p>
         )
       )}
     </div>
