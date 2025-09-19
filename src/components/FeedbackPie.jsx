@@ -25,10 +25,68 @@ export default function FeedbackPie({ title, data }) {
   }))
 
   // Filter only non-zero values for the pie
- const adjustedData = chartData.map(d => ({
-  ...d,
-  value: d.value === 0 ? 0.1 : d.value
-}));
+ //const adjustedData = chartData.map(d => ({
+ // ...d,
+ // value: d.value === 0 ? 0.001 : d.value
+//}));
+const renderCustomizedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  outerRadius,
+  percent,
+  value,
+  name,
+  index,
+  colors
+}) => {
+  const RADIAN = Math.PI / 180;
+
+  // Skip zero values → they’ll be handled in center stack
+  if (value === 0) return null;
+
+  // Position label outside slice
+  const radius = outerRadius + 20;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill={colors[index % colors.length]} // match slice color
+      textAnchor={x > cx ? "start" : "end"}
+      dominantBaseline="central"
+      fontSize={12}
+      fontWeight="bold"
+    >
+      {`${name}: ${value}`}
+    </text>
+  );
+};
+
+
+const CenterLabels = ({ data, cx, cy }) => {
+  const zeroSlices = data.filter((d) => d.value === 0);
+
+  return (
+    <g>
+      {zeroSlices.map((d, i) => (
+        <text
+          key={d.name}
+          x={cx}
+          y={cy + i * 16 - (zeroSlices.length * 8)} // stack vertically
+          fill="#33363bff" // always grey
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fontSize={11}
+        >
+          {`${d.name}: 0`}
+        </text>
+      ))}
+    </g>
+  );
+};
 
 
   return (
@@ -37,19 +95,31 @@ export default function FeedbackPie({ title, data }) {
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
   <Pie
-    data={adjustedData}
+    data={chartData}
     dataKey="value"
     nameKey="name"
     cx="50%"
     cy="50%"
     outerRadius={120}
     labelLine={false}
-    label={({ name, value }) => `${name}: ${value}`}
+    label={(props) =>
+      renderCustomizedLabel({ ...props, colors: COLORS })
+    }
   >
-    {adjustedData.map((entry, index) => (
-      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+    {chartData.map((entry, index) => (
+      <Cell
+        key={`cell-${index}`}
+        fill={COLORS[index % COLORS.length]}
+        opacity={entry.value === 0 ? 0.5 : 1}
+      />
     ))}
   </Pie>
+
+  {/* Center stacked labels for 0 values */}
+  <CenterLabels data={chartData} cx={200} cy={200} />
+
+
+
 
   <Tooltip />
 
