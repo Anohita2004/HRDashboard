@@ -33,20 +33,19 @@ const renderCustomizedLabel = ({
   cx,
   cy,
   midAngle,
-  innerRadius,
   outerRadius,
   percent,
   value,
   name,
   index,
-  allData
+  colors
 }) => {
   const RADIAN = Math.PI / 180;
 
-  // If slice is too small (<5%) or value = 0 → skip drawing here
-  if (value === 0 || percent < 0.05) return null;
+  // Skip zero values → they’ll be handled in center stack
+  if (value === 0) return null;
 
-  // Normal slices: draw outside
+  // Position label outside slice
   const radius = outerRadius + 20;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -55,7 +54,7 @@ const renderCustomizedLabel = ({
     <text
       x={x}
       y={y}
-      fill="white"
+      fill={colors[index % colors.length]} // match slice color
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
       fontSize={12}
@@ -68,23 +67,21 @@ const renderCustomizedLabel = ({
 
 
 const CenterLabels = ({ data, cx, cy }) => {
-  const smallSlices = data.filter(
-    (d) => d.value === 0 || d.value / data.reduce((a, b) => a + b.value, 0) < 0.05
-  );
+  const zeroSlices = data.filter((d) => d.value === 0);
 
   return (
     <g>
-      {smallSlices.map((d, i) => (
+      {zeroSlices.map((d, i) => (
         <text
           key={d.name}
           x={cx}
-          y={cy + i * 16 - (smallSlices.length * 8)} // stack vertically
-          fill="#9CA3AF"
+          y={cy + i * 16 - (zeroSlices.length * 8)} // stack vertically
+          fill="#33363bff" // always grey
           textAnchor="middle"
           dominantBaseline="middle"
           fontSize={11}
         >
-          {`${d.name}: ${d.value}`}
+          {`${d.name}: 0`}
         </text>
       ))}
     </g>
@@ -105,7 +102,9 @@ const CenterLabels = ({ data, cx, cy }) => {
     cy="50%"
     outerRadius={120}
     labelLine={false}
-    label={(props) => renderCustomizedLabel({ ...props, allData: chartData })}
+    label={(props) =>
+      renderCustomizedLabel({ ...props, colors: COLORS })
+    }
   >
     {chartData.map((entry, index) => (
       <Cell
@@ -115,7 +114,8 @@ const CenterLabels = ({ data, cx, cy }) => {
       />
     ))}
   </Pie>
-  {/* Center overlay for small/zero slices */}
+
+  {/* Center stacked labels for 0 values */}
   <CenterLabels data={chartData} cx={200} cy={200} />
 
 
