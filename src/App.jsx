@@ -66,52 +66,59 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black 
                 text-white p-8 animate-gradient">
       {/* Top Bar */}
-      <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-        <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
-          📊 HR Dashboard
-        </h1>
+      <div className="flex items-center justify-between mb-4 gap-4">
+  {/* Icon + Title */}
+  <div className="flex items-center gap-2">
+    <img
+      src="icons8-dashboard-layout-48.png"
+      alt="HR"
+      className="w-10 h-10"
+    />
+    <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent m-0">
+      HR Dashboard
+    </h1>
+  </div>
 
-        {/* Upload + Filters */}
-        <div className="bg-gray-800/50 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-700">
-          <div className="flex items-center gap-3 flex-wrap">
-            <ExcelUploader onData={setData} />
+  {/* Upload + Filters */}
+  <div className="flex items-center gap-3 bg-gray-800/50 backdrop-blur-md p-4 rounded-xl shadow-md border border-gray-700">
+    <ExcelUploader onData={setData} />
 
-            {data.length > 0 && (
-              <>
-                <span className="text-sm font-medium text-gray-300">Filters:</span>
+    {data.length > 0 && (
+      <>
+        <span className="text-sm font-medium text-gray-300">Filters:</span>
 
-                <select
-                  value={poc}
-                  onChange={(e) => setPoc(e.target.value)}
-                  className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
-                             focus:ring-2 focus:ring-indigo-500 hover:border-indigo-400 transition"
-                >
-                  <option value="">All POCs</option>
-                  {pocOptions.map((p) => (
-                    <option key={p} value={p}>
-                      {p}
-                    </option>
-                  ))}
-                </select>
+        <select
+          value={poc}
+          onChange={(e) => setPoc(e.target.value)}
+          className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
+                     focus:ring-2 focus:ring-indigo-500 hover:border-indigo-400 transition"
+        >
+          <option value="">All POCs</option>
+          {pocOptions.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
 
-                <select
-                  value={month}
-                  onChange={(e) => setMonth(e.target.value)}
-                  className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
-                             focus:ring-2 focus:ring-pink-500 hover:border-pink-400 transition"
-                >
-                  <option value="">All Months</option>
-                  {monthOptions.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
+        <select
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          className="p-2 rounded-lg bg-gray-800/70 text-white border border-gray-600 
+                     focus:ring-2 focus:ring-pink-500 hover:border-pink-400 transition"
+        >
+          <option value="">All Months</option>
+          {monthOptions.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      </>
+    )}
+  </div>
+</div>
+
 
       {/* Placeholder when no data */}
       {data.length === 0 && (
