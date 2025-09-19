@@ -59,9 +59,9 @@ export default function FeedbackPie({ title, data }) {
     value: `${item.name}: ${item.value}`,
     color: COLORS[index % COLORS.length],
   }))}
-  layout="vertical"
+  /*layout="vertical"
   verticalAlign="middle"
-  align="left"
+  align="left"*/
 />
 
 </PieChart>
