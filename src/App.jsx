@@ -73,7 +73,7 @@ export default function App() {
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black 
                 text-white p-8 animate-gradient">
       {/* Top Bar */}
-      <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
         <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-400 to-pink-500 bg-clip-text text-transparent">
           📊 HR Dashboard
         </h1>
@@ -135,7 +135,7 @@ export default function App() {
 
       {/* Stat Cards */}
       {data.length > 0 && filtered.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-4">
           {/* Counts */}
           <div>
             <h2 className="text-sm font-bold text-gray-300 mb-3">Tabs</h2>
