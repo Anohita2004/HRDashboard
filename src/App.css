@@ -56,3 +56,13 @@
   background-size: 300% 300%;
   animation: gradient-move 15s ease infinite;
 }
+.dashboard-title {
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-icon {
+  width: 12px;
+  height: 24px;
+  margin-right: 8px;
+}

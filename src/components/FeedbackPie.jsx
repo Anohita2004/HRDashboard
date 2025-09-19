@@ -26,7 +26,7 @@ export default function FeedbackPie({ title, data }) {
   // Filter only non-zero values for the pie
  const adjustedData = chartData.map(d => ({
   ...d,
-  value: d.value === 0 ? 0.01 : d.value
+  value: d.value === 0 ? 0.0 : d.value
 }));
 
 
