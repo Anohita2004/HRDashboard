@@ -10,15 +10,8 @@ const StatCard = ({ title, value, color }) => (
   >
     <h3 className="text-gray-300 text-xs mb-1 truncate">{title}</h3>
     <p className={`text-lg font-bold text-${color}-400`}>{value}</p>
-    {/* optional progress bar for percentage cards */}
-    {String(value).includes("%") && (
-      <div className="w-full bg-gray-700 rounded-full h-1 mt-2">
-        <div
-          className={`bg-${color}-500 h-1 rounded-full`}
-          style={{ width: value }}
-        ></div>
-      </div>
-    )}
+    
+   
   </div>
 )
 
