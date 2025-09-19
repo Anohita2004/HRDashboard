@@ -24,38 +24,47 @@ export default function FeedbackPie({ title, data }) {
   }))
 
   // Filter only non-zero values for the pie
-  const nonZeroData = chartData.filter((d) => d.value > 0)
+ const adjustedData = chartData.map(d => ({
+  ...d,
+  value: d.value === 0 ? 0.01 : d.value
+}));
+
 
   return (
     <div className="bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md border border-gray-700">
       <h2 className="text-md font-semibold text-gray-200 mb-3">{title}</h2>
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
-          <Pie
-            data={nonZeroData}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={120}
-            label={({ name, value }) => `${name}: ${value}`}
-          >
-            {nonZeroData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
+  <Pie
+    data={adjustedData}
+    dataKey="value"
+    nameKey="name"
+    cx="50%"
+    cy="50%"
+    outerRadius={120}
+    labelLine={false}
+    label={({ name, value }) => `${name}: ${value}`}
+  >
+    {adjustedData.map((entry, index) => (
+      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+    ))}
+  </Pie>
 
-          {/* Custom legend that always includes 0 values */}
-          <Legend
-            payload={chartData.map((item, index) => ({
-              id: item.name,
-              type: "square",
-              value: `${item.name}: ${item.value}`,
-              color: COLORS[index % COLORS.length],
-            }))}
-          />
-        </PieChart>
+  <Tooltip />
+
+  <Legend
+  payload={chartData.map((item, index) => ({
+    id: item.name,
+    type: "square",
+    value: `${item.name}: ${item.value}`,
+    color: COLORS[index % COLORS.length],
+  }))}
+  layout="vertical"
+  verticalAlign="middle"
+  align="left"
+/>
+
+</PieChart>
       </ResponsiveContainer>
     </div>
   )
