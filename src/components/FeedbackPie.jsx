@@ -50,19 +50,16 @@ const renderCustomizedLabel = ({
 };
 
 const CenterLabels = ({ data, cx, cy, colors }) => {
-  const zeroSlices = data.filter((d) => d.value === 0);
-
   return (
     <g>
-      {zeroSlices.map((d, i) => {
+      {data.map((d, i) => {
         const index = data.findIndex((entry) => entry.name === d.name);
-
         return (
           <motion.text
-            key={d.name}
+            key={`${d.name}-${d.value}`} // ensures remount and animation reset
             x={cx}
-            y={cy + i * 1 - zeroSlices.length * 9}
-            fill={colors[index % colors.length]} // 🔹 Use slice color
+            y={cy + i * 18 - data.length * 9}
+            fill={colors[index % colors.length]}
             textAnchor="middle"
             dominantBaseline="middle"
             fontSize={12}
@@ -70,11 +67,11 @@ const CenterLabels = ({ data, cx, cy, colors }) => {
             initial={{ opacity: 0, y: cy + 40 }}
             animate={{
               opacity: 1,
-              y: cy + i * 18 - zeroSlices.length * 9,
+              y: cy + i * 18 - data.length * 9,
             }}
             transition={{
               duration: 0.6,
-              delay: 1 + i * 0.2,
+              delay: 0.5 + i * 0.2,
               type: "spring",
               stiffness: 120,
             }}
@@ -93,8 +90,11 @@ export default function FeedbackPie({ title, data }) {
     value,
   }));
 
+  const zeroValues = chartData.filter((d) => d.value === 0);
+  const nonZeroValues = chartData.filter((d) => d.value !== 0);
+
   return (
-    <div className="bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md border border-gray-700">
+    <div className="relative bg-gray-800/60 backdrop-blur-md p-6 rounded-xl shadow-md border border-gray-700">
       <h2 className="text-md font-semibold text-gray-200 mb-3">{title}</h2>
       <ResponsiveContainer width="100%" height={350}>
         <PieChart>
@@ -119,12 +119,14 @@ export default function FeedbackPie({ title, data }) {
             ))}
           </Pie>
 
-          {/* Now center labels get relative cx, cy from "50%" */}
-          <CenterLabels data={chartData} cx={435} cy={65} colors={COLORS}  />
-
+        
           <Tooltip />
+
+          {/* Legend only for non-zero values */}
           <Legend
-            payload={chartData.map((item, index) => ({
+            verticalAlign="bottom"
+            align="center"
+            payload={nonZeroValues.map((item, index) => ({
               id: item.name,
               type: "square",
               value: `${item.name}: ${item.value}`,
@@ -133,6 +135,43 @@ export default function FeedbackPie({ title, data }) {
           />
         </PieChart>
       </ResponsiveContainer>
+
+      {/* Zero-value legends table */}
+      {zeroValues.length > 0 && (
+        <motion.div
+          className="absolute top-6 right-6 bg-gray-900/80 p-3 rounded-md shadow-lg border border-gray-700"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 1 }}
+        >
+          <h3 className="text-xs font-semibold text-gray-300 mb-2">
+            Zero Value Legends
+          </h3>
+          <table className="text-xs text-gray-300">
+            <tbody>
+              {zeroValues.map((item, i) => (
+                <tr key={item.name}>
+                  <td>
+                    <span
+                      className="inline-block w-3 h-3 rounded-sm mr-2"
+                      style={{
+                        backgroundColor:
+                          COLORS[
+                            chartData.findIndex((d) => d.name === item.name) %
+                              COLORS.length
+                          ],
+                      }}
+                    ></span>
+                  </td>
+                  <td>{item.name}</td>
+                  <td className="pl-2 text-gray-400">0</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+      )}
     </div>
   );
 }
+
